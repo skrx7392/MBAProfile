@@ -15,5 +15,6 @@ namespace MBAProfile.Models
     public partial class UCMModerator : UCMUser
     {
         public bool IsActive { get; set; }
+        public string programID { get; set; }
     }
 }
