@@ -1,0 +1,648 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MBAProfileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CourseNumber" Type="nvarchar" MaxLength="8" />
+          <Property Name="ConcentrationCode" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="ProgramId" Type="int" Nullable="false" />
+          <Property Name="PreqId" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Major">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MajorId" Type="int" Nullable="false" />
+          <Property Name="Conc_Code" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student_AcademicStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AcademicStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student_TrainingStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UCMModerator">
+          <Key>
+            <PropertyRef Name="ModeratorId" />
+          </Key>
+          <Property Name="ModeratorId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UCMStudent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProgramId" Type="int" Nullable="false" />
+          <Property Name="GPA" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="GREScore" Type="int" />
+          <Property Name="GMATScore" Type="int" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="TrainingId" Type="int" />
+          <Property Name="StudentTrainingStatusId" Type="int" />
+          <Property Name="Student_AcademicStatusId" Type="int" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="ApprovedGrad" Type="bit" />
+          <Property Name="PrereqsMet" Type="bit" />
+          <Property Name="Advisor" Type="int" />
+        </EntityType>
+        <EntityType Name="UCMUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AlternateEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Program__MajorId__3D5E1FD2">
+          <End Role="Major" Type="Self.Major" Multiplicity="1" />
+          <End Role="Program" Type="Self.Program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Major">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Program">
+              <PropertyRef Name="MajorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMModera__Moder__3E52440B">
+          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
+          <End Role="UCMModerator" Type="Self.UCMModerator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UCMUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMModerator">
+              <PropertyRef Name="ModeratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Progr__1FCDBCEB">
+          <End Role="Program" Type="Self.Program" Multiplicity="1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Stude__2A4B4B5E">
+          <End Role="Student_TrainingStatus" Type="Self.Student_TrainingStatus" Multiplicity="0..1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_TrainingStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="StudentTrainingStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Stude__2B3F6F97">
+          <End Role="Student_AcademicStatus" Type="Self.Student_AcademicStatus" Multiplicity="1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_AcademicStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="Student_AcademicStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Train__25869641">
+          <End Role="Training" Type="Self.Training" Multiplicity="0..1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStudent__Id__1ED998B2">
+          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UCMUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMUser__RoleId__440B1D61">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="CourseNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="CCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="PreqId" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UpdateCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CourseId" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="CourseNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="CCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="PreqId" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="MBAProfileModelStoreContainer">
+          <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Major" EntityType="Self.Major" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Program" EntityType="Self.Program" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_AcademicStatus" EntityType="Self.Student_AcademicStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student_TrainingStatus" EntityType="Self.Student_TrainingStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Training" EntityType="Self.Training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UCMModerator" EntityType="Self.UCMModerator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UCMStudent" EntityType="Self.UCMStudent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UCMUser" EntityType="Self.UCMUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Program__MajorId__3D5E1FD2" Association="Self.FK__Program__MajorId__3D5E1FD2">
+            <End Role="Major" EntitySet="Major" />
+            <End Role="Program" EntitySet="Program" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMModera__Moder__3E52440B" Association="Self.FK__UCMModera__Moder__3E52440B">
+            <End Role="UCMUser" EntitySet="UCMUser" />
+            <End Role="UCMModerator" EntitySet="UCMModerator" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Progr__1FCDBCEB" Association="Self.FK__UCMStuden__Progr__1FCDBCEB">
+            <End Role="Program" EntitySet="Program" />
+            <End Role="UCMStudent" EntitySet="UCMStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Stude__2A4B4B5E" Association="Self.FK__UCMStuden__Stude__2A4B4B5E">
+            <End Role="Student_TrainingStatus" EntitySet="Student_TrainingStatus" />
+            <End Role="UCMStudent" EntitySet="UCMStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Stude__2B3F6F97" Association="Self.FK__UCMStuden__Stude__2B3F6F97">
+            <End Role="Student_AcademicStatus" EntitySet="Student_AcademicStatus" />
+            <End Role="UCMStudent" EntitySet="UCMStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Train__25869641" Association="Self.FK__UCMStuden__Train__25869641">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="UCMStudent" EntitySet="UCMStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStudent__Id__1ED998B2" Association="Self.FK__UCMStudent__Id__1ED998B2">
+            <End Role="UCMUser" EntitySet="UCMUser" />
+            <End Role="UCMStudent" EntitySet="UCMStudent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMUser__RoleId__440B1D61" Association="Self.FK__UCMUser__RoleId__440B1D61">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UCMUser" EntitySet="UCMUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MBAProfileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="ConcentrationCode" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProgramId" Type="Int32" Nullable="false" />
+          <Property Name="PreqId" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Program" Relationship="Self.FK__courses__Program__3C69FB99" FromRole="courses" ToRole="Program" />
+        </EntityType>
+        <EntityType Name="Major">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Programs" Relationship="Self.FK__Program__MajorId__145C0A3F" FromRole="Major" ToRole="Program" />
+        </EntityType>
+        <EntityType Name="Program">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MajorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="courses" Relationship="Self.FK__courses__Program__3C69FB99" FromRole="Program" ToRole="courses" />
+          <NavigationProperty Name="Major" Relationship="Self.FK__Program__MajorId__145C0A3F" FromRole="Program" ToRole="Major" />
+          <NavigationProperty Name="UCMStudents" Relationship="Self.FK__UCMStuden__Progr__1FCDBCEB" FromRole="Program" ToRole="UCMStudent" />
+          <Property Name="Conc_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UCMUsers" Relationship="Self.FK__UCMUser__RoleId__1BFD2C07" FromRole="Role" ToRole="UCMUser" />
+        </EntityType>
+        <EntityType Name="Student_AcademicStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AcademicStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UCMStudents" Relationship="Self.FK__UCMStuden__Stude__2B3F6F97" FromRole="Student_AcademicStatus" ToRole="UCMStudent" />
+        </EntityType>
+        <EntityType Name="Student_TrainingStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UCMStudents" Relationship="Self.FK__UCMStuden__Stude__2A4B4B5E" FromRole="Student_TrainingStatus" ToRole="UCMStudent" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UCMStudents" Relationship="Self.FK__UCMStuden__Train__25869641" FromRole="Training" ToRole="UCMStudent" />
+        </EntityType>
+        <EntityType Name="UCMModerator" BaseType="MBAProfileModel.UCMUser">
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UCMStudent" BaseType="MBAProfileModel.UCMUser">
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProgramId" Type="Int32" Nullable="false" />
+          <Property Name="GPA" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="GREScore" Type="Int32" />
+          <Property Name="GMATScore" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TrainingId" Type="Int32" />
+          <Property Name="StudentTrainingStatusId" Type="Int32" />
+          <Property Name="Student_AcademicStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Program" Relationship="Self.FK__UCMStuden__Progr__1FCDBCEB" FromRole="UCMStudent" ToRole="Program" />
+          <NavigationProperty Name="Student_AcademicStatus" Relationship="Self.FK__UCMStuden__Stude__2B3F6F97" FromRole="UCMStudent" ToRole="Student_AcademicStatus" />
+          <NavigationProperty Name="Student_TrainingStatus" Relationship="Self.FK__UCMStuden__Stude__2A4B4B5E" FromRole="UCMStudent" ToRole="Student_TrainingStatus" />
+          <NavigationProperty Name="Training" Relationship="Self.FK__UCMStuden__Train__25869641" FromRole="UCMStudent" ToRole="Training" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovedGrad" Type="Boolean" />
+          <Property Name="PrereqsMet" Type="Boolean" />
+          <Property Name="Advisor" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UCMUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AlternateEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__UCMUser__RoleId__1BFD2C07" FromRole="UCMUser" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__courses__Program__3C69FB99">
+          <End Role="Program" Type="Self.Program" Multiplicity="1" />
+          <End Role="courses" Type="MBAProfileModel.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Program__MajorId__145C0A3F">
+          <End Role="Major" Type="Self.Major" Multiplicity="1" />
+          <End Role="Program" Type="Self.Program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Major">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Program">
+              <PropertyRef Name="MajorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Progr__1FCDBCEB">
+          <End Role="Program" Type="Self.Program" Multiplicity="1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Program">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="ProgramId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMUser__RoleId__1BFD2C07">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Stude__2B3F6F97">
+          <End Role="Student_AcademicStatus" Type="Self.Student_AcademicStatus" Multiplicity="1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_AcademicStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="Student_AcademicStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Stude__2A4B4B5E">
+          <End Role="Student_TrainingStatus" Type="Self.Student_TrainingStatus" Multiplicity="0..1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student_TrainingStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="StudentTrainingStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UCMStuden__Train__25869641">
+          <End Role="Training" Type="Self.Training" Multiplicity="0..1" />
+          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMStudent">
+              <PropertyRef Name="TrainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="courses" EntityType="MBAProfileModel.Course" />
+          <EntitySet Name="Majors" EntityType="Self.Major" />
+          <EntitySet Name="Programs" EntityType="Self.Program" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Student_AcademicStatus" EntityType="Self.Student_AcademicStatus" />
+          <EntitySet Name="Student_TrainingStatus" EntityType="Self.Student_TrainingStatus" />
+          <EntitySet Name="Trainings" EntityType="Self.Training" />
+          <EntitySet Name="UCMUsers" EntityType="Self.UCMUser" />
+          <AssociationSet Name="FK__courses__Program__3C69FB99" Association="Self.FK__courses__Program__3C69FB99">
+            <End Role="Program" EntitySet="Programs" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Program__MajorId__145C0A3F" Association="Self.FK__Program__MajorId__145C0A3F">
+            <End Role="Major" EntitySet="Majors" />
+            <End Role="Program" EntitySet="Programs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Progr__1FCDBCEB" Association="Self.FK__UCMStuden__Progr__1FCDBCEB">
+            <End Role="Program" EntitySet="Programs" />
+            <End Role="UCMStudent" EntitySet="UCMUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMUser__RoleId__1BFD2C07" Association="Self.FK__UCMUser__RoleId__1BFD2C07">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UCMUser" EntitySet="UCMUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Stude__2B3F6F97" Association="Self.FK__UCMStuden__Stude__2B3F6F97">
+            <End Role="Student_AcademicStatus" EntitySet="Student_AcademicStatus" />
+            <End Role="UCMStudent" EntitySet="UCMUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Stude__2A4B4B5E" Association="Self.FK__UCMStuden__Stude__2A4B4B5E">
+            <End Role="Student_TrainingStatus" EntitySet="Student_TrainingStatus" />
+            <End Role="UCMStudent" EntitySet="UCMUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UCMStuden__Train__25869641" Association="Self.FK__UCMStuden__Train__25869641">
+            <End Role="Training" EntitySet="Trainings" />
+            <End Role="UCMStudent" EntitySet="UCMUsers" />
+          </AssociationSet>
+          <FunctionImport Name="AddCourse">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CourseNumber" Mode="In" Type="String" />
+            <Parameter Name="CCode" Mode="In" Type="String" />
+            <Parameter Name="PreqId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateCourse">
+            <Parameter Name="CourseId" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CourseNumber" Mode="In" Type="String" />
+            <Parameter Name="CCode" Mode="In" Type="String" />
+            <Parameter Name="PreqId" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MBAProfileModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="MBAProfileModel.Course">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="ConcentrationCode" ColumnName="ConcentrationCode" />
+                <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+                <ScalarProperty Name="PreqId" ColumnName="PreqId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="MBAProfileModel.Course">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="MBAProfileModel.Store.AddCourse">
+                  <ScalarProperty Name="ConcentrationCode" ParameterName="CCode" />
+                  <ScalarProperty Name="PreqId" ParameterName="PreqId" />
+                  <ScalarProperty Name="CourseNumber" ParameterName="CourseNumber" />
+                  <ScalarProperty Name="Name" ParameterName="Name" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="MBAProfileModel.Store.UpdateCourse">
+                  <ScalarProperty Name="ConcentrationCode" ParameterName="CCode" Version="Current" />
+                  <ScalarProperty Name="Id" ParameterName="CourseId" Version="Current" />
+                  <ScalarProperty Name="PreqId" ParameterName="PreqId" Version="Current" />
+                  <ScalarProperty Name="CourseNumber" ParameterName="CourseNumber" Version="Current" />
+                  <ScalarProperty Name="Name" ParameterName="Name" Version="Current" />
+                </UpdateFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Majors">
+            <EntityTypeMapping TypeName="MBAProfileModel.Major">
+              <MappingFragment StoreEntitySet="Major">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Programs">
+            <EntityTypeMapping TypeName="MBAProfileModel.Program">
+              <MappingFragment StoreEntitySet="Program">
+                <ScalarProperty Name="Conc_Code" ColumnName="Conc_Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MajorId" ColumnName="MajorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MBAProfileModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_AcademicStatus">
+            <EntityTypeMapping TypeName="MBAProfileModel.Student_AcademicStatus">
+              <MappingFragment StoreEntitySet="Student_AcademicStatus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AcademicStatus" ColumnName="AcademicStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student_TrainingStatus">
+            <EntityTypeMapping TypeName="MBAProfileModel.Student_TrainingStatus">
+              <MappingFragment StoreEntitySet="Student_TrainingStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TrainingStatus" ColumnName="TrainingStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainings">
+            <EntityTypeMapping TypeName="MBAProfileModel.Training">
+              <MappingFragment StoreEntitySet="Training">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UCMUsers">
+            <EntityTypeMapping TypeName="IsTypeOf(MBAProfileModel.UCMUser)">
+              <MappingFragment StoreEntitySet="UCMUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="AlternateEmail" ColumnName="AlternateEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(MBAProfileModel.UCMModerator)">
+              <MappingFragment StoreEntitySet="UCMModerator">
+                <ScalarProperty Name="Id" ColumnName="ModeratorId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(MBAProfileModel.UCMStudent)">
+              <MappingFragment StoreEntitySet="UCMStudent">
+                <ScalarProperty Name="Advisor" ColumnName="Advisor" />
+                <ScalarProperty Name="PrereqsMet" ColumnName="PrereqsMet" />
+                <ScalarProperty Name="ApprovedGrad" ColumnName="ApprovedGrad" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Student_AcademicStatusId" ColumnName="Student_AcademicStatusId" />
+                <ScalarProperty Name="StudentTrainingStatusId" ColumnName="StudentTrainingStatusId" />
+                <ScalarProperty Name="TrainingId" ColumnName="TrainingId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="GMATScore" ColumnName="GMATScore" />
+                <ScalarProperty Name="GREScore" ColumnName="GREScore" />
+                <ScalarProperty Name="GPA" ColumnName="GPA" />
+                <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddCourse" FunctionName="MBAProfileModel.Store.AddCourse" />
+          <FunctionImportMapping FunctionImportName="UpdateCourse" FunctionName="MBAProfileModel.Store.UpdateCourse" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

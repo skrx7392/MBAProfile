@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="860698389299461bb57e1b835b4d72bf" Name="Diagram1" ZoomLevel="99">
+        <EntityTypeShape EntityType="MBAProfileModel.Course" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Major" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Program" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Role" Width="1.5" PointX="3.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Student_AcademicStatus" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Student_TrainingStatus" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.Training" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.UCMModerator" Width="1.5" PointX="8.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.UCMStudent" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBAProfileModel.UCMUser" Width="1.5" PointX="6" PointY="14.5" IsExpanded="true" />
+        <AssociationConnector Association="MBAProfileModel.FK__courses__Program__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__Program__MajorId__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__UCMStuden__Progr__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__UCMUser__RoleId__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__UCMStuden__Stude__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__UCMStuden__Stude__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="MBAProfileModel.FK__UCMStuden__Train__25869641" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="MBAProfileModel.UCMModerator" />
+        <InheritanceConnector EntityType="MBAProfileModel.UCMStudent" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
