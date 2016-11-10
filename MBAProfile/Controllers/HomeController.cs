@@ -140,22 +140,45 @@ namespace MBAProfile.Controllers
         #endregion
 
         [Route("AddStudent")]
-        [HttpPut]
-        public IHttpActionResult addStudent([FromBody]UCMStudent student)
+        [HttpPost]
+        public IHttpActionResult addStudent(StudentInfo student)
         {
             IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
             {
-                unitOfWork.StudentsInfo.Add(student);
+                UCMStudent _student = new UCMStudent();
+                _student.Address = student.Address;
+                _student.Advisor = student.Advisor;
+                _student.ApprovedGrad = student.ApprovedGrad;
+                _student.Comments = student.Comments;
+                _student.AlternateEmail = student.AlternateEmail;
+                _student.CreatedDate = student.CreatedDate;
+                _student.Email = student.Email;
+                _student.FirstName = student.FirstName;
+                _student.GMATScore = student.GMATScore;
+                _student.GPA = student.GPA;
+                _student.GREScore = student.GREScore;
+                _student.LastName = student.LastName;
+                _student.ModifiedDate = student.ModifiedDate;
+                _student.Password = student.Password;
+                _student.PhoneNumber = student.PhoneNumber;
+                _student.PrereqsMet = student.PrereqsMet;
+                _student.ProgramId = student.ProgramId;
+                _student.RoleId = student.RoleId;
+                _student.StartDate = student.StartDate;
+                _student.StudentTrainingStatusId = student.StudentTrainingStatusId;
+                _student.Student_AcademicStatusId = student.Student_AcademicStatusId;
+                _student.TrainingId = student.TrainingId;
+                unitOfWork.StudentsInfo.Add(_student);
                 if (unitOfWork.Save() >= 1)
                 {
-                    return Ok();
+                    return Ok("Success");
                 }
                 return BadRequest("There is an error");
             }
         }
-
+        
         [Route("AddAdvisor")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult addAdvisor([FromBody] UCMModerator advisor)
         {
             IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
@@ -163,14 +186,14 @@ namespace MBAProfile.Controllers
                 unitOfWork.AdvisorInfo.Add(advisor);
                 if (unitOfWork.Save() >= 1)
                 {
-                    return Ok();
+                    return Ok("Success");
                 }
                 return BadRequest("There is an error");
             }
         }
 
         [Route("AddCourse")]
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult addCourse([FromBody] CourseInfo course)
         {
             Entities unitOfWork = new Entities();
@@ -178,7 +201,7 @@ namespace MBAProfile.Controllers
                int result= unitOfWork.AddCourse(course.Name, course.CourseNumber, course.CCode, course.PreqId);
                 if (result>=1)
                 {
-                    return Ok();
+                    return Ok("Success");
                 }
                 return BadRequest("There is an error");
             }
@@ -193,7 +216,7 @@ namespace MBAProfile.Controllers
                 int result = unitOfWork.UpdateCourse(course.Id, course.Name, course.CourseNumber, course.CCode, course.PreqId);
                 if (result>=1)
                 {
-                    return Ok();
+                    return Ok("Success");
                 }
                 return BadRequest("There is an error");
             }

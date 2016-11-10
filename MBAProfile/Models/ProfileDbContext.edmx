@@ -66,6 +66,7 @@
           </Key>
           <Property Name="ModeratorId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="programID" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UCMStudent">
           <Key>
@@ -101,7 +102,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Program__MajorId__3D5E1FD2">
+        <Association Name="FK__Program__MajorId__3A81B327">
           <End Role="Major" Type="Self.Major" Multiplicity="1" />
           <End Role="Program" Type="Self.Program" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +114,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UCMModera__Moder__3E52440B">
+        <Association Name="FK__UCMModera__Moder__3B75D760">
           <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
           <End Role="UCMModerator" Type="Self.UCMModerator" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -185,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UCMUser__RoleId__440B1D61">
+        <Association Name="FK__UCMUser__RoleId__412EB0B6">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,11 +222,11 @@
           <EntitySet Name="UCMModerator" EntityType="Self.UCMModerator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UCMStudent" EntityType="Self.UCMStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UCMUser" EntityType="Self.UCMUser" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Program__MajorId__3D5E1FD2" Association="Self.FK__Program__MajorId__3D5E1FD2">
+          <AssociationSet Name="FK__Program__MajorId__3A81B327" Association="Self.FK__Program__MajorId__3A81B327">
             <End Role="Major" EntitySet="Major" />
             <End Role="Program" EntitySet="Program" />
           </AssociationSet>
-          <AssociationSet Name="FK__UCMModera__Moder__3E52440B" Association="Self.FK__UCMModera__Moder__3E52440B">
+          <AssociationSet Name="FK__UCMModera__Moder__3B75D760" Association="Self.FK__UCMModera__Moder__3B75D760">
             <End Role="UCMUser" EntitySet="UCMUser" />
             <End Role="UCMModerator" EntitySet="UCMModerator" />
           </AssociationSet>
@@ -249,7 +250,7 @@
             <End Role="UCMUser" EntitySet="UCMUser" />
             <End Role="UCMStudent" EntitySet="UCMStudent" />
           </AssociationSet>
-          <AssociationSet Name="FK__UCMUser__RoleId__440B1D61" Association="Self.FK__UCMUser__RoleId__440B1D61">
+          <AssociationSet Name="FK__UCMUser__RoleId__412EB0B6" Association="Self.FK__UCMUser__RoleId__412EB0B6">
             <End Role="Role" EntitySet="Role" />
             <End Role="UCMUser" EntitySet="UCMUser" />
           </AssociationSet>
@@ -324,6 +325,7 @@
         </EntityType>
         <EntityType Name="UCMModerator" BaseType="MBAProfileModel.UCMUser">
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="programID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UCMStudent" BaseType="MBAProfileModel.UCMUser">
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
@@ -596,6 +598,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(MBAProfileModel.UCMModerator)">
               <MappingFragment StoreEntitySet="UCMModerator">
+                <ScalarProperty Name="programID" ColumnName="programID" />
                 <ScalarProperty Name="Id" ColumnName="ModeratorId" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
