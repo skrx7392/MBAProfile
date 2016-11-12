@@ -56,6 +56,12 @@ namespace MBAProfile.Models
             string role = UCMDbContext.Roles.FirstOrDefault(p => p.Id == roleId).Name;
             return role;
         }
+
+        public UCMUser GetDirector()
+        {
+            Role role = UCMDbContext.Roles.FirstOrDefault(p => p.Name.Equals("Director"));
+            return UCMDbContext.UCMUsers.FirstOrDefault(p => p.RoleId == role.Id);
+        }
     }
 
     public class UCMStudentRepository : UCMRepository<UCMStudent> 
@@ -237,6 +243,11 @@ namespace MBAProfile.Models
             UCMDbContext = context;
         }
 
+        public TEntity Get(int id)
+        {
+            return UCMDbContext.Set<TEntity>().Find(id);
+        }
+
         public IEnumerable<TEntity> getAll()
         {
             return UCMDbContext.Set<TEntity>().AsNoTracking().AsEnumerable();
@@ -245,10 +256,16 @@ namespace MBAProfile.Models
         {
             UCMDbContext.Set<TEntity>().Add(entity);
         }
-
+        
         public void AddRange(IEnumerable<TEntity> entites)
         {
             UCMDbContext.Set<TEntity>().AddRange(entites);
+
+        }
+
+        public void Update(TEntity entity)
+        {
+            UCMDbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> entities)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace MBAProfile.Controllers
 {
@@ -12,7 +13,7 @@ namespace MBAProfile.Controllers
     {
         [Route("Login")]
         [HttpPost]
-        public IHttpActionResult ValidateUser(UserLogin user)
+        public IHttpActionResult ValidateUser([FromBody]UserLogin user)
         {
             IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
             {
@@ -51,6 +52,13 @@ namespace MBAProfile.Controllers
             }
         }
 
+        [Route("getDirector")]
+        public IHttpActionResult getDirector()
+        {
+            IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
+            return Ok(unitOfWork.UserInfo.GetDirector());
+        }
+
         //StudentsFinishedTrainings
         [Route("getStudentsFinishedTrainings")]
         public IHttpActionResult getStudentsFinishedTrainings()
@@ -60,7 +68,7 @@ namespace MBAProfile.Controllers
                 return Ok(unitOfWork.StudentsInfo.StudentsFinishedTrainings());
             }
         }
-        
+
         [Route("getStudentsWithTrainings")]
         public IHttpActionResult getStudentsWithTrainings()
         {
@@ -87,7 +95,7 @@ namespace MBAProfile.Controllers
                 return Ok(unitOfWork.AdvisorInfo.getAllInActiveAdvisors());
             }
         }
-        
+
         [Route("GetPrograms")]
         public IHttpActionResult getAllPrograms()
         {
@@ -141,42 +149,30 @@ namespace MBAProfile.Controllers
 
         [Route("AddStudent")]
         [HttpPost]
-        public IHttpActionResult addStudent(StudentInfo student)
+        public IHttpActionResult addStudent([FromBody]UCMStudent student)
         {
             IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
+            unitOfWork.StudentsInfo.Add(student);
+            if (unitOfWork.Save() >= 1)
             {
-                UCMStudent _student = new UCMStudent();
-                _student.Address = student.Address;
-                _student.Advisor = student.Advisor;
-                _student.ApprovedGrad = student.ApprovedGrad;
-                _student.Comments = student.Comments;
-                _student.AlternateEmail = student.AlternateEmail;
-                _student.CreatedDate = student.CreatedDate;
-                _student.Email = student.Email;
-                _student.FirstName = student.FirstName;
-                _student.GMATScore = student.GMATScore;
-                _student.GPA = student.GPA;
-                _student.GREScore = student.GREScore;
-                _student.LastName = student.LastName;
-                _student.ModifiedDate = student.ModifiedDate;
-                _student.Password = student.Password;
-                _student.PhoneNumber = student.PhoneNumber;
-                _student.PrereqsMet = student.PrereqsMet;
-                _student.ProgramId = student.ProgramId;
-                _student.RoleId = student.RoleId;
-                _student.StartDate = student.StartDate;
-                _student.StudentTrainingStatusId = student.StudentTrainingStatusId;
-                _student.Student_AcademicStatusId = student.Student_AcademicStatusId;
-                _student.TrainingId = student.TrainingId;
-                unitOfWork.StudentsInfo.Add(_student);
-                if (unitOfWork.Save() >= 1)
-                {
-                    return Ok("Success");
-                }
-                return BadRequest("There is an error");
+                return Ok("Success");
             }
+            return BadRequest("There is an error");
         }
-        
+
+        [Route("UpdateStudent")]
+        [HttpPost]
+        public IHttpActionResult updateStudent([FromBody] UCMStudent student)
+        {
+            IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
+            unitOfWork.StudentsInfo.Update(student);
+            if(unitOfWork.Save() >= 1)
+            {
+                return Ok("Success");
+            }
+            return BadRequest("There is an error");
+        }
+
         [Route("AddAdvisor")]
         [HttpPost]
         public IHttpActionResult addAdvisor([FromBody] UCMModerator advisor)
@@ -198,8 +194,8 @@ namespace MBAProfile.Controllers
         {
             Entities unitOfWork = new Entities();
             {
-               int result= unitOfWork.AddCourse(course.Name, course.CourseNumber, course.CCode, course.PreqId);
-                if (result>=1)
+                int result = unitOfWork.AddCourse(course.Name, course.CourseNumber, course.CCode, course.PreqId);
+                if (result >= 1)
                 {
                     return Ok("Success");
                 }
@@ -214,7 +210,7 @@ namespace MBAProfile.Controllers
             Entities unitOfWork = new Entities();
             {
                 int result = unitOfWork.UpdateCourse(course.Id, course.Name, course.CourseNumber, course.CCode, course.PreqId);
-                if (result>=1)
+                if (result >= 1)
                 {
                     return Ok("Success");
                 }

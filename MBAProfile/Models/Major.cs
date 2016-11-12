@@ -17,13 +17,14 @@ namespace MBAProfile.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Major()
         {
-            this.Programs = new HashSet<Program>();
+            HashSet<Program> hs = new HashSet<Program>();
+            this.Programs = new List<Program>(hs);
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Program> Programs { get; set; }
+        public virtual List<Program> Programs { get; set; }
     }
 }

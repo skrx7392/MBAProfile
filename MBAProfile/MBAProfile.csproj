@@ -139,7 +139,6 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>ProfileDbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StudentInfo.cs" />
     <Compile Include="Models\Student_AcademicStatus.cs">
       <DependentUpon>ProfileDbContext.tt</DependentUpon>
     </Compile>
