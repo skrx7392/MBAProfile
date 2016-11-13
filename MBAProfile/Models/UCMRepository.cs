@@ -7,13 +7,16 @@ using System.Web;
 using MBAProfile.Models;
 namespace MBAProfile.Models
 {
+    /// <summary>
+    /// Training status whether they had completed or not
+    /// </summary>
     public enum TrainingStatus
     {
-        Due =2,
-        Completed=3
+        Due = 2,
+        Completed = 3
     }
-    
-    interface IRepository<TEntity> where TEntity:class
+
+    interface IRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> getAll();
         void Add(TEntity entity);
@@ -30,11 +33,15 @@ namespace MBAProfile.Models
         {
             UCMDbContext = context;
         }
-
+        /// <summary>
+        /// Validates login
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public bool ValidateLogin(UserLogin user)
         {
             var getUserById = UCMDbContext.UCMUsers.AsNoTracking().FirstOrDefault(usr => usr.Id == user.ID);
-            if (getUserById!=null && getUserById.Password.Equals(user.Password))
+            if (getUserById != null && getUserById.Password.Equals(user.Password))
             {
                 return true;
             }
@@ -49,14 +56,21 @@ namespace MBAProfile.Models
         {
             UCMDbContext = context;
         }
-
+        /// <summary>
+        /// Gets user with their roles
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetUser(int id)
         {
             int roleId = UCMDbContext.UCMUsers.FirstOrDefault(p => p.Id == id).RoleId;
             string role = UCMDbContext.Roles.FirstOrDefault(p => p.Id == roleId).Name;
             return role;
         }
-
+        /// <summary>
+        /// Gets Director details from User
+        /// </summary>
+        /// <returns></returns>
         public UCMUser GetDirector()
         {
             Role role = UCMDbContext.Roles.FirstOrDefault(p => p.Name.Equals("Director"));
@@ -64,7 +78,7 @@ namespace MBAProfile.Models
         }
     }
 
-    public class UCMStudentRepository : UCMRepository<UCMStudent> 
+    public class UCMStudentRepository : UCMRepository<UCMStudent>
     {
         Entities UCMDbContext;
         public UCMStudentRepository(Entities context) : base(context)
@@ -74,7 +88,7 @@ namespace MBAProfile.Models
 
         public IEnumerable<UCMStudent> StudentsWithACMTrainingDue()
         {
-            return UCMDbContext.UCMStudents.Where(student => student.TrainingId == 1 && student.Student_TrainingStatus.Id==(int)TrainingStatus.Due).AsNoTracking().AsEnumerable();
+            return UCMDbContext.UCMStudents.Where(student => student.TrainingId == 1 && student.Student_TrainingStatus.Id == (int)TrainingStatus.Due).AsNoTracking().AsEnumerable();
         }
 
         public IEnumerable<UCMStudent> StudentsFinishedTrainings()
@@ -113,7 +127,7 @@ namespace MBAProfile.Models
     public class UCMStudent_AcademicStatusRepository : UCMRepository<Student_AcademicStatus>
     {
         Entities UCMDbContext;
-        public UCMStudent_AcademicStatusRepository(Entities context):base(context)
+        public UCMStudent_AcademicStatusRepository(Entities context) : base(context)
         {
             UCMDbContext = context;
         }
@@ -122,7 +136,7 @@ namespace MBAProfile.Models
     public class UCMStudent_TrainingStatusRepository : UCMRepository<Student_TrainingStatus>
     {
         Entities UCMDbContext;
-        public UCMStudent_TrainingStatusRepository(Entities context):base(context)
+        public UCMStudent_TrainingStatusRepository(Entities context) : base(context)
         {
             UCMDbContext = context;
         }
@@ -131,7 +145,7 @@ namespace MBAProfile.Models
     public class UCMTrainingRepository : UCMRepository<Training>
     {
         Entities UCMDbContext;
-        public UCMTrainingRepository(Entities context):base(context)
+        public UCMTrainingRepository(Entities context) : base(context)
         {
             UCMDbContext = context;
         }
@@ -165,10 +179,10 @@ namespace MBAProfile.Models
         }
     }
 
-    public interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork : IDisposable
     {
-        UCMStudentRepository StudentsInfo  { get; }
-        UCMAdvisorRepository AdvisorInfo { get;}
+        UCMStudentRepository StudentsInfo { get; }
+        UCMAdvisorRepository AdvisorInfo { get; }
         LoginRepository LoginInfo { get; }
         UCMCourseRepository CoursesInfo { get; }
         UCMProgramRepository ProgramInfo { get; }
@@ -235,7 +249,7 @@ namespace MBAProfile.Models
         }
     }
 
-    public class UCMRepository<TEntity> : IRepository<TEntity> where TEntity:class
+    public class UCMRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         DbContext UCMDbContext;
         public UCMRepository(DbContext context)
@@ -257,7 +271,7 @@ namespace MBAProfile.Models
             UCMDbContext.Entry(entity).State = EntityState.Added;
             //UCMDbContext.Set<TEntity>().Add(entity);
         }
-        
+
         public void AddRange(IEnumerable<TEntity> entites)
         {
             UCMDbContext.Set<TEntity>().AddRange(entites);
