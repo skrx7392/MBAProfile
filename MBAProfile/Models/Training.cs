@@ -17,13 +17,14 @@ namespace MBAProfile.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Training()
         {
-            this.UCMStudents = new HashSet<UCMStudent>();
+            HashSet<UCMStudent> hs = new HashSet<UCMStudent>();
+            this.UCMStudents = new List<UCMStudent>(hs);
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UCMStudent> UCMStudents { get; set; }
+        public virtual List<UCMStudent> UCMStudents { get; set; }
     }
 }

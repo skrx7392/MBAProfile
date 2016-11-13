@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Sekhar\Source\Repos\MBAProfile\MBAProfile\Models\ProfileDbContext.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\saikr\Downloads\MBAProfile\MBAProfile\MBAProfile\Models\ProfileDbContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -7,6 +7,7 @@ namespace MBAProfile.Models
 {
     public class CourseInfo
     {
+        //course.Id, course.Name, course.CourseNumber, course.ConcentrationCode, course.PreqId, course.IsActive
         public int Id { get; set; }
         public string Name { get; set; }
         public string CourseNumber { get; set; }
