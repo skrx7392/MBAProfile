@@ -20,6 +20,7 @@ namespace MBAProfile.Models
         public Entities()
             : base("name=Entities")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,7 +36,9 @@ namespace MBAProfile.Models
         public virtual DbSet<Student_TrainingStatus> Student_TrainingStatus { get; set; }
         public virtual DbSet<Training> Trainings { get; set; }
         public virtual DbSet<UCMUser> UCMUsers { get; set; }
-    
+        public virtual DbSet<UCMStudent> UCMStudents { get; set; }
+        public virtual DbSet<UCMModerator> UCMModerator { get; set; }
+
         public virtual int AddCourse(string name, string courseNumber, string cCode, string preqId, Nullable<bool> prereqIsActive)
         {
             var nameParameter = name != null ?
