@@ -237,7 +237,7 @@ namespace MBAProfile.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Adds a program to the database
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
@@ -255,7 +255,7 @@ namespace MBAProfile.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates the program in database
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>

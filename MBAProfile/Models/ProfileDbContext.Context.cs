@@ -37,7 +37,7 @@ namespace MBAProfile.Models
         public virtual DbSet<Training> Trainings { get; set; }
         public virtual DbSet<UCMUser> UCMUsers { get; set; }
         public virtual DbSet<UCMStudent> UCMStudents { get; set; }
-        public virtual DbSet<UCMModerator> UCMModerator { get; set; }
+        public virtual DbSet<UCMModerator> UCMModerators { get; set; }
 
         public virtual int AddCourse(string name, string courseNumber, string cCode, string preqId, Nullable<bool> prereqIsActive)
         {
