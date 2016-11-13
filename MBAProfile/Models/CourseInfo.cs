@@ -13,5 +13,6 @@ namespace MBAProfile.Models
         public string CourseNumber { get; set; }
         public string CCode { get; set; }
         public string PreqId { get; set; }
+        public bool PrereqIsActive { get; set; }
     }
 }

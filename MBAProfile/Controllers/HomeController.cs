@@ -153,10 +153,23 @@ namespace MBAProfile.Controllers
         {
             IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
             unitOfWork.StudentsInfo.Add(student);
-            if (unitOfWork.Save() >= 1)
+            int save = 0;
+            try
+            {
+                save = unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            if (save >= 1)
             {
                 return Ok("Success");
             }
+            //if (unitOfWork.Save() >= 1)
+            //{
+            //    return Ok("Success");
+            //}
             return BadRequest("There is an error");
         }
 
@@ -188,13 +201,26 @@ namespace MBAProfile.Controllers
             }
         }
 
+        [Route("UpdateAdvisor")]
+        [HttpPost]
+        public IHttpActionResult updateAdvisor([FromBody] UCMModerator advisor)
+        {
+            IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
+            unitOfWork.AdvisorInfo.Update(advisor);
+            if(unitOfWork.Save()>=1)
+            {
+                return Ok("Success");
+            }
+            return BadRequest("There is an error");
+        }
+
         [Route("AddCourse")]
         [HttpPost]
         public IHttpActionResult addCourse([FromBody] CourseInfo course)
         {
             Entities unitOfWork = new Entities();
             {
-                int result = unitOfWork.AddCourse(course.Name, course.CourseNumber, course.CCode, course.PreqId);
+                int result = unitOfWork.AddCourse(course.Name, course.CourseNumber, course.CCode, course.PreqId, course.PrereqIsActive);
                 if (result >= 1)
                 {
                     return Ok("Success");
@@ -209,13 +235,26 @@ namespace MBAProfile.Controllers
         {
             Entities unitOfWork = new Entities();
             {
-                int result = unitOfWork.UpdateCourse(course.Id, course.Name, course.CourseNumber, course.CCode, course.PreqId);
+                int result = unitOfWork.UpdateCourse(course.Id, course.Name, course.CourseNumber, course.CCode, course.PreqId, course.PrereqIsActive);
                 if (result >= 1)
                 {
                     return Ok("Success");
                 }
                 return BadRequest("There is an error");
             }
+        }
+
+        [Route("updateUser")]
+        [HttpPost]
+        public IHttpActionResult updateUser([FromBody] UCMUser user)
+        {
+            IUnitOfWork unitOfWork = new UnitOfWork(new Entities());
+            unitOfWork.UserInfo.Update(user);
+            if (unitOfWork.Save() >= 1)
+            {
+                return Ok("Success");
+            }
+            return BadRequest("There is an error");
         }
     }
 }

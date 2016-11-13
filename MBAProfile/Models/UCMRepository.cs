@@ -254,7 +254,8 @@ namespace MBAProfile.Models
         }
         public void Add(TEntity entity)
         {
-            UCMDbContext.Set<TEntity>().Add(entity);
+            UCMDbContext.Entry(entity).State = EntityState.Added;
+            //UCMDbContext.Set<TEntity>().Add(entity);
         }
         
         public void AddRange(IEnumerable<TEntity> entites)

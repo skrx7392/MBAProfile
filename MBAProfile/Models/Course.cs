@@ -20,6 +20,7 @@ namespace MBAProfile.Models
         public string ConcentrationCode { get; set; }
         public int ProgramId { get; set; }
         public string PreqId { get; set; }
+        public Nullable<bool> PrereqIsActive { get; set; }
     
         public virtual Program Program { get; set; }
     }

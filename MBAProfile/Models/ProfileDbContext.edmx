@@ -9,55 +9,57 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="CourseNumber" Type="nvarchar" MaxLength="8" />
           <Property Name="ConcentrationCode" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="ProgramId" Type="int" Nullable="false" />
           <Property Name="PreqId" Type="nvarchar(max)" />
+          <Property Name="PrereqIsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Major">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Program">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MajorId" Type="int" Nullable="false" />
           <Property Name="Conc_Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Student_AcademicStatus">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="AcademicStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Student_TrainingStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TrainingStatus" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Training">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="UCMModerator">
@@ -102,7 +104,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Program__MajorId__3A81B327">
+        <Association Name="FK__Program__MajorId__38996AB5">
           <End Role="Major" Type="Self.Major" Multiplicity="1" />
           <End Role="Program" Type="Self.Program" Multiplicity="*" />
           <ReferentialConstraint>
@@ -111,18 +113,6 @@
             </Principal>
             <Dependent Role="Program">
               <PropertyRef Name="MajorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UCMModera__Moder__3B75D760">
-          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
-          <End Role="UCMModerator" Type="Self.UCMModerator" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UCMUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UCMModerator">
-              <PropertyRef Name="ModeratorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -174,19 +164,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UCMStudent__Id__1ED998B2">
-          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
-          <End Role="UCMStudent" Type="Self.UCMStudent" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UCMUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UCMStudent">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UCMUser__RoleId__412EB0B6">
+        <Association Name="FK__UCMUser__RoleId__3F466844">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,11 +176,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UCMModerator_UCMUser">
+          <End Role="UCMUser" Type="Self.UCMUser" Multiplicity="1" />
+          <End Role="UCMModerator" Type="Self.UCMModerator" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UCMUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UCMModerator">
+              <PropertyRef Name="ModeratorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="AddCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
           <Parameter Name="CourseNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="CCode" Type="nvarchar" Mode="In" />
           <Parameter Name="PreqId" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PrereqIsActive" Type="bit" Mode="In" />
         </Function>
         <Function Name="UpdateCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CourseId" Type="int" Mode="In" />
@@ -210,6 +201,7 @@
           <Parameter Name="CourseNumber" Type="nvarchar" Mode="In" />
           <Parameter Name="CCode" Type="nvarchar" Mode="In" />
           <Parameter Name="PreqId" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PrereqIsActive" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="MBAProfileModelStoreContainer">
           <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
@@ -222,13 +214,9 @@
           <EntitySet Name="UCMModerator" EntityType="Self.UCMModerator" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UCMStudent" EntityType="Self.UCMStudent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UCMUser" EntityType="Self.UCMUser" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Program__MajorId__3A81B327" Association="Self.FK__Program__MajorId__3A81B327">
+          <AssociationSet Name="FK__Program__MajorId__38996AB5" Association="Self.FK__Program__MajorId__38996AB5">
             <End Role="Major" EntitySet="Major" />
             <End Role="Program" EntitySet="Program" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UCMModera__Moder__3B75D760" Association="Self.FK__UCMModera__Moder__3B75D760">
-            <End Role="UCMUser" EntitySet="UCMUser" />
-            <End Role="UCMModerator" EntitySet="UCMModerator" />
           </AssociationSet>
           <AssociationSet Name="FK__UCMStuden__Progr__1FCDBCEB" Association="Self.FK__UCMStuden__Progr__1FCDBCEB">
             <End Role="Program" EntitySet="Program" />
@@ -246,13 +234,13 @@
             <End Role="Training" EntitySet="Training" />
             <End Role="UCMStudent" EntitySet="UCMStudent" />
           </AssociationSet>
-          <AssociationSet Name="FK__UCMStudent__Id__1ED998B2" Association="Self.FK__UCMStudent__Id__1ED998B2">
-            <End Role="UCMUser" EntitySet="UCMUser" />
-            <End Role="UCMStudent" EntitySet="UCMStudent" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UCMUser__RoleId__412EB0B6" Association="Self.FK__UCMUser__RoleId__412EB0B6">
+          <AssociationSet Name="FK__UCMUser__RoleId__3F466844" Association="Self.FK__UCMUser__RoleId__3F466844">
             <End Role="Role" EntitySet="Role" />
             <End Role="UCMUser" EntitySet="UCMUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UCMModerator_UCMUser" Association="Self.FK_UCMModerator_UCMUser">
+            <End Role="UCMUser" EntitySet="UCMUser" />
+            <End Role="UCMModerator" EntitySet="UCMModerator" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -270,6 +258,7 @@
           <Property Name="ProgramId" Type="Int32" Nullable="false" />
           <Property Name="PreqId" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Program" Relationship="Self.FK__courses__Program__3C69FB99" FromRole="courses" ToRole="Program" />
+          <Property Name="PrereqIsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Major">
           <Key>
@@ -290,6 +279,7 @@
           <NavigationProperty Name="Major" Relationship="Self.FK__Program__MajorId__145C0A3F" FromRole="Program" ToRole="Major" />
           <NavigationProperty Name="UCMStudents" Relationship="Self.FK__UCMStuden__Progr__1FCDBCEB" FromRole="Program" ToRole="UCMStudent" />
           <Property Name="Conc_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -488,6 +478,7 @@
             <Parameter Name="CourseNumber" Mode="In" Type="String" />
             <Parameter Name="CCode" Mode="In" Type="String" />
             <Parameter Name="PreqId" Mode="In" Type="String" />
+            <Parameter Name="PrereqIsActive" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="UpdateCourse">
             <Parameter Name="CourseId" Mode="In" Type="Int32" />
@@ -495,6 +486,7 @@
             <Parameter Name="CourseNumber" Mode="In" Type="String" />
             <Parameter Name="CCode" Mode="In" Type="String" />
             <Parameter Name="PreqId" Mode="In" Type="String" />
+            <Parameter Name="PrereqIsActive" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -506,6 +498,7 @@
           <EntitySetMapping Name="courses">
             <EntityTypeMapping TypeName="MBAProfileModel.Course">
               <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="PrereqIsActive" ColumnName="PrereqIsActive" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
@@ -517,12 +510,14 @@
             <EntityTypeMapping TypeName="MBAProfileModel.Course">
               <ModificationFunctionMapping>
                 <InsertFunction FunctionName="MBAProfileModel.Store.AddCourse">
+                  <ScalarProperty Name="PrereqIsActive" ParameterName="PrereqIsActive" />
                   <ScalarProperty Name="ConcentrationCode" ParameterName="CCode" />
                   <ScalarProperty Name="PreqId" ParameterName="PreqId" />
                   <ScalarProperty Name="CourseNumber" ParameterName="CourseNumber" />
                   <ScalarProperty Name="Name" ParameterName="Name" />
                 </InsertFunction>
                 <UpdateFunction FunctionName="MBAProfileModel.Store.UpdateCourse">
+                  <ScalarProperty Name="PrereqIsActive" ParameterName="PrereqIsActive" Version="Current" />
                   <ScalarProperty Name="ConcentrationCode" ParameterName="CCode" Version="Current" />
                   <ScalarProperty Name="Id" ParameterName="CourseId" Version="Current" />
                   <ScalarProperty Name="PreqId" ParameterName="PreqId" Version="Current" />
@@ -543,6 +538,7 @@
           <EntitySetMapping Name="Programs">
             <EntityTypeMapping TypeName="MBAProfileModel.Program">
               <MappingFragment StoreEntitySet="Program">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Conc_Code" ColumnName="Conc_Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
