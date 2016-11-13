@@ -17,10 +17,8 @@ namespace MBAProfile.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Program()
         {
-            HashSet<Course> hs = new HashSet<Course>();
-            this.courses = new List<Course>(hs);
-            HashSet<UCMStudent> hs1 = new HashSet<UCMStudent>();
-            this.UCMStudents = new List<UCMStudent>(hs1);
+            this.courses = new HashSet<Course>();
+            this.UCMStudents = new HashSet<UCMStudent>();
         }
     
         public int Id { get; set; }
@@ -28,11 +26,11 @@ namespace MBAProfile.Models
         public int MajorId { get; set; }
         public string Conc_Code { get; set; }
         public Nullable<bool> IsActive { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual List<Course> courses { get; set; }
+        public virtual ICollection<Course> courses { get; set; }
         public virtual Major Major { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual List<UCMStudent> UCMStudents { get; set; }
+        public virtual ICollection<UCMStudent> UCMStudents { get; set; }
     }
 }
