@@ -1,6 +1,7 @@
 ﻿using MBAProfile.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -239,7 +240,7 @@ namespace MBAProfile.Controllers
         /// <summary>
         /// Adds a program to the database
         /// </summary>
-        /// <param name="student"></param>
+        /// <param name="program"></param>
         /// <returns></returns>
         [Route("addProgram")]
         [HttpPost]
@@ -257,7 +258,7 @@ namespace MBAProfile.Controllers
         /// <summary>
         /// Updates the program in database
         /// </summary>
-        /// <param name="student"></param>
+        /// <param name="program"></param>
         /// <returns></returns>
         [Route("UpdateProgram")]
         [HttpPost]
@@ -367,6 +368,38 @@ namespace MBAProfile.Controllers
                 return Ok("Success");
             }
             return BadRequest("There is an error");
+        }
+
+        [HttpGet]
+        [Route("checkQuestionnaire/{id}")]
+        public IHttpActionResult checkQuestionnaire(int id)
+        {
+            string filepath= System.Web.Configuration.WebConfigurationManager.AppSettings["questionnairepath"] + id.ToString() + ".txt";
+            if (File.Exists(filepath))
+            {
+                return Ok(true);
+            }
+            return Ok(false);
+        }
+
+        [Route("addquestionnaire")]
+        public IHttpActionResult addQuestionnaire([FromBody]string jsonString)
+        {
+            try
+            {
+                string filepath = System.Web.Configuration.WebConfigurationManager.AppSettings["questionnairepath"] + User.Identity.Name + ".txt";
+                TextWriter writer = null;
+                writer = new StreamWriter(filepath, false);
+                writer.Write(jsonString);
+                if (writer != null)
+                    writer.Close();
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("There is an error");
+            }
+
         }
     }
 }
